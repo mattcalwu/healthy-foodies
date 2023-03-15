@@ -1,55 +1,42 @@
-import React, { useState } from "react";
-import {Button, TextInput, StyleSheet, View} from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, Button, StyleSheet, ImageBackground, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { firebaseAuth, provider } from '../environment/config';
+import {signInWithPopup} from "firebase/auth";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
+export default class Login extends React.Component {
+  // state = { email: '', password: '', errorMessage: null }
+  // provider = new firebaseAuth.auth.GoogleAuthProvider();
+
+  googleLogin = () => {
+    signInWithPopup(firebaseAuth, provider).then((data) => {
+      const userData = data.user
+      console.log(userData.displayName)
+      console.log(userData.email)
+    })
   }
-
-  function handleSubmit(event) {
-    event.preventDefault();
+  handleLogin = () => {
+    // TODO: Firebase stuff...
+    console.log('handleLogin')
+    firebaseAuth.signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('Main'))
+      .catch(error => this.setState({ errorMessage: error.message }))
   }
+  render() {
+    return (
 
-  return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textBox}
-        placeholder="Email"
-        onChangeText={newEmail => setEmail(newEmail)}
-        defaultValue={email}
-      />
-      <TextInput
-        style={styles.textBox}
-        placeholder="Password"
-        onChangeText={newPwd => setPassword(newPwd)}
-        defaultValue={password}
-      />
-      <Button
-        title="LOGIN"
-        onPress={e => handleSubmit(e)}
-      />
-    </View>
-  );
-
+        <View >
+          <Text >Login</Text>
+          
+         
+          <button onClick={this.googleLogin}>Signin With Google</button>
+          
+         
+        </View>
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#fff',
-    },
-    textBox: {
-      height: 40,
-      width: '80%',
-      borderColor: 'gray',
-      borderWidth: 1,
-      paddingHorizontal: 10,
-      marginTop: 20,
-    },
-  });
-
-export default LoginScreen
