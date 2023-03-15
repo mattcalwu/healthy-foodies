@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { Button, Text } from 'react-native';
+import { Button, StyleSheet, Text , View} from 'react-native';
 import { firebaseAuth, provider } from '../environment/config';
 import {signInWithPopup} from "firebase/auth";
 
 export const RegistrationScreen = ({navigation}) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   function googleLogin() {
     signInWithPopup(firebaseAuth, provider).then((data) => {
       const userData = data.user
@@ -15,16 +13,27 @@ export const RegistrationScreen = ({navigation}) => {
 
   }
   return (
-    <>
-      <Text >ZotFoods</Text>
-      <Text>Account Registration</Text>
-      <Button title={"SignIn With Google"} onPress={() => {
+    <View style={styles.container}>
+      <Text style={styles.title}>Login to your Account with Google</Text>
+      <Button title={"Sign In With Google"} onPress={() => {
         googleLogin()
       }} />
-    </>
+    </View>
   );
 };
 
-
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#fff",
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 16,
+    },
+  });
 
 export default RegistrationScreen;

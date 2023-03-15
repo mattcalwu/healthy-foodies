@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Text, TextInput, StyleSheet, View } from "react-native";
-import { firebaseAuth, provider } from "../environment/config";
 import { getAuth, signOut } from "firebase/auth";
 
 const HomeScreen = ({ navigation }) => {
@@ -45,6 +44,7 @@ const HomeScreen = ({ navigation }) => {
         onSubmitEditing={handleSearch}
         value={searchValue}
       />
+     
     </View>
   );
 };
@@ -79,6 +79,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "30%",
     marginTop: 20,
+  },
+  map: {
+    width: '50%',
+    height: '50%',
   },
 });
 
