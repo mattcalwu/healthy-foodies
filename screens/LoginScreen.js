@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import {Button, TextInput, StyleSheet, View} from 'react-native';
+import {Button, Text, TextInput, StyleSheet, View} from 'react-native';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   function validateForm() {
@@ -12,8 +12,10 @@ const LoginScreen = () => {
     event.preventDefault();
   }
 
+  //Currently have navigation between login page and home page
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Enter Your Email and Password</Text>
       <TextInput
         style={styles.textBox}
         placeholder="Email"
@@ -27,8 +29,10 @@ const LoginScreen = () => {
         defaultValue={password}
       />
       <Button
-        title="LOGIN"
-        onPress={e => handleSubmit(e)}
+        title="Go to Registration Page" 
+        onPress={() => {
+            navigation.navigate("Home")
+      }}
       />
     </View>
   );
@@ -42,6 +46,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#fff',
     },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 16,
+      },
     textBox: {
       height: 40,
       width: '80%',
