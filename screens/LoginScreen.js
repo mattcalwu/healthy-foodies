@@ -1,12 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ImageBackground, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { firebaseAuth, provider } from '../environment/config';
 import {signInWithPopup} from "firebase/auth";
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
 
 export default class Login extends React.Component {
   // state = { email: '', password: '', errorMessage: null }
@@ -18,6 +13,7 @@ export default class Login extends React.Component {
       console.log(userData.displayName)
       console.log(userData.email)
     })
+
   }
   handleLogin = () => {
     // TODO: Firebase stuff...

@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useState } from "react";
 import { Button, Text, StyleSheet, TextInput } from "react-native";
 // import Parse from "parse/react-native";
 
-export const RegistrationScreen = () => {
+export const RegistrationScreen = ({navigation}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +24,9 @@ export const RegistrationScreen = () => {
         secureTextEntry
         onChangeText={(text) => setPassword(text)}
       />
-      <Button title={"Sign Up"} onPress={() => {}} />
+      <Button title={"Sign Up"} onPress={() => {
+        navigation.navigate("Home")
+      }} />
     </>
   );
 };
