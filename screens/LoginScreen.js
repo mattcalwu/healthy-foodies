@@ -1,38 +1,30 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from "react";
+import { Button, Text } from 'react-native';
 import { firebaseAuth, provider } from '../environment/config';
 import {signInWithPopup} from "firebase/auth";
 
-export default class Login extends React.Component {
-  // state = { email: '', password: '', errorMessage: null }
-  // provider = new firebaseAuth.auth.GoogleAuthProvider();
-
-  googleLogin = () => {
+export const RegistrationScreen = ({navigation}) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  function googleLogin() {
     signInWithPopup(firebaseAuth, provider).then((data) => {
       const userData = data.user
       console.log(userData.displayName)
       console.log(userData.email)
-    })
+    }).then(() => navigation.navigate("Home"))
 
   }
-  handleLogin = () => {
-    // TODO: Firebase stuff...
-    console.log('handleLogin')
-    firebaseAuth.signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('Main'))
-      .catch(error => this.setState({ errorMessage: error.message }))
-  }
-  render() {
-    return (
+  return (
+    <>
+      <Text >ZotFoods</Text>
+      <Text>Account Registration</Text>
+      <Button title={"SignIn With Google"} onPress={() => {
+        googleLogin()
+      }} />
+    </>
+  );
+};
 
-        <View >
-          <Text >Login</Text>
-          
-         
-          <button onClick={this.googleLogin}>Signin With Google</button>
-          
-         
-        </View>
-    )
-  }
-}
+
+
+export default RegistrationScreen;
