@@ -17,7 +17,7 @@ npm install @react-navigation/native @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
 
 
-# Installation/Start
+# Installation/Start (EVERYTIME YOU GIT PULL)
 
 ```
 git clone git@github.com:mattcalwu/healthy-foodies.git
