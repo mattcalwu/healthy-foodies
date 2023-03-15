@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { Button, Text, TextInput, StyleSheet, View} from 'react-native';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearch = () => {
@@ -20,6 +20,12 @@ const HomeScreen = () => {
         onSubmitEditing={handleSearch}
         value={searchValue}
       />
+      <Button
+        title="Go to Login Page" 
+        onPress={() => {
+            navigation.navigate("Login")
+        }}
+    />
     </View>
   );
 };
