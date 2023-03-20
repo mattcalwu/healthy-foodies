@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { Divider } from "react-native-elements";
-import GetAddress from "./GetAddress";
 import RestaurantMenuObjects from "./restaurantMenuObjects";
 import RestaurantSnippet from "./RestaurantSnippet";
 
@@ -9,7 +8,7 @@ import RestaurantSnippet from "./RestaurantSnippet";
 const testFoods = [
     {
       title: "McGriddle",
-      description: "What happens is the One True God grows them on trees in the Elysian Fields using a heretofore unused incantation. He then proceeds to magic them down to your local eatery where whatever Ghetto Bastard cook your McDonalds has rescued from welfare that week proceeds to wrap it in cellophane and pass it along to you, the fortunate consumer.",
+      description: "What the frosted flakes did you just frootloop about me you little captain crunch? I’ll have you know I’m a part of a balanced breakfast and have under 300 confirmed calories per a serving.",
       price: "$6.50",
     },
     {
@@ -24,7 +23,7 @@ const testFoods = [
     },
     {
       title: "McSoup",
-      description: "And then, then my friends, they wrapped it in a sumptuous pancake bun! As your taste buds try to process that amazing piece of information, IT hits them…the syrup nugget. THE MOTHERFUCKING SYRUP NUGGET!",
+      description: "The cholesterol drop that makes you bee happy and bee healthy. Your chances of having a heart attack have been lowered. You can eat cereal anytime, everyday and can buy over 700 different brands, and that’s just general mills cereal.",
       price: "$16.00",
     },
 ];
@@ -33,9 +32,8 @@ export default function InformationView({ route }) {
     return (
         <View>
             <RestaurantSnippet route={route} />
-            <Divider width={1.8} style={styles.gap} />
+            <Divider width={1.5} color={"black"} style={styles.gap} />
             <RestaurantMenuObjects food={testFoods}/>
-            <GetAddress route={route} />
         </View>
     );
 }

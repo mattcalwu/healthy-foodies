@@ -3,11 +3,8 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Divider } from "react-native-elements";
 import { ScrollView } from "react-native-web";
 import NavBar from "../components/navBar";
-import SearchBar from "../components/SearchBar";
+import SearchByLocationBar from "../components/SearchByLocationBar";
 import ViewRestaurants, { testRestaurants, } from "../components/viewRestaurants";
-
-// YELP
-const YELP_API_KEY = "OZGT54NiVj5veY1qL5nqknbFR75DEnesxCcZlPpPud9y75h2V74PRqmT_3w0-IYrDVAOfWaaah946CeSgE_RTLMnjMaBxlVZKg1oDU4ILyqtUn3NdcyrqdIvkIcSZHYx";
 
 export default function HomeScreen({ navigation }) {
   const [restaurantData, getRestaurantResults] = useState(testRestaurants);
@@ -18,13 +15,13 @@ export default function HomeScreen({ navigation }) {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: `Bearer ${YELP_API_KEY}`
+        Authorization: 'Bearer wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx'
       }
     };
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var testURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`
+    var targetURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`
 
-    return fetch(proxyUrl + testURL, options)
+    return fetch(proxyUrl + targetURL, options)
       .then((response) => response.json())
       .then((json) => getRestaurantResults(json.businesses));
   };
@@ -40,11 +37,9 @@ export default function HomeScreen({ navigation }) {
         <SearchBar locationHandler={setLocation}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ViewRestaurants restaurantData={restaurantData} navigation={navigation} />
+        <ViewRestaurants yelpData={restaurantResults} navigation={navigation} />
       </ScrollView>
-      <Divider width={1}>
-        <NavBar />
-      </Divider>
+      <NavBar />
     </SafeAreaView>
   );
 };

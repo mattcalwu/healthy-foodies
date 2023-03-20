@@ -1,9 +1,9 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Divider, Rating } from "react-native-elements";
-import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native'; 
+import Clipboard from '@react-native-clipboard/clipboard';
 
 
 const yelpRestaurantInfo = {
@@ -24,37 +24,41 @@ const yelpRestaurantInfo = {
 };
 
 export default function RestaurantSnippet(props) {
-    const {name, image, price, reviews, distance, categories} = props.route.params;
-    const formattedCategories = categories.map((cat) => cat.title).join(' * ');
-    const description = `${formattedCategories} * ${(distance/1609).toFixed(2)} mi ${price ? ' * ' + price : ""} * ${reviews} reviews`;
+    const {name, image, address, categories} = props.route.params;
+    const restaurantCategories = categories.map((cat) => (<Text style={styles.categoriesWrapper}>{cat.title}</Text>));
 
     const navigation = useNavigation();
     return (
         <View>
-            <SnippetImage image={image} />
-            <TouchableOpacity 
-                style={{position: 'absolute', right: 25, top:15}}
-                onPress={() => navigation.navigate('Home')}
-            >
-                <MaterialIcons name="cancel" size={32} color="red" style={styles.cancelButton} />
-            </TouchableOpacity>
-            <SnippetTitle title={name} />
-            <SnippetDescription description={description} />
+            <View>
+              <Image source={{uri: image}} style={styles.snippetImage} />
+                <TouchableOpacity 
+                    style={{position: 'absolute', right: 25, top:15}}
+                    onPress={() => navigation.navigate('Home')}
+                >
+                    <MaterialIcons name="cancel" size={32} color="red" style={styles.cancelButton} />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.headerContainer}>
+              <Text style={styles.snippetTitle}>{name}</Text>
+              <TouchableOpacity style={styles.AddressButton} onPress={() => {Clipboard.setString(address), alert("Clipped!")}}>
+                <GetAddressButton style={styles.AddressButtonWrapper} />
+              </TouchableOpacity>
+            </View>
+            <View>
+                <Text style={styles.snippetDescription}>{restaurantCategories}</Text>
+            </View>
         </View>
     )
 }
 
 
-const SnippetImage = (props) => (
-    <Image source={{uri: props.image}} style={styles.snippetImage} />
-)
-
-const SnippetTitle = (props) => (
-    <Text style={styles.snippetTitle}>{props.title}</Text>
-)
-
-const SnippetDescription = (props) => (
-    <Text style={styles.snippetDescription}>{props.description}</Text>
+const GetAddressButton = (props) => (
+    <View style={styles.AddressContainer}>
+        <View style={styles.AddressButtonContainer}>
+          <Text style={styles.AddressText}>Get Address</Text>
+        </View>
+    </View>
 )
 
 const styles = StyleSheet.create({
@@ -64,20 +68,66 @@ const styles = StyleSheet.create({
       marginHorizontal: 30,
       justifyContent: 'space-between',
     },
+    categoriesWrapper: {
+      textAlign: "center",
+      color: 'white',
+      backgroundColor: '#ADADAD',
+      borderRadius: 10,
+      paddingHorizontal: 8,
+      marginHorizontal: 2,
+    },
     snippetImage: {
       width: '100%',
       height: 180,
     },
+    headerContainer: {
+      width: "90%",
+      marginHorizontal: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: 8,
+    },
+    AddressButtonWrapper: {
+      textAlign: 'right',
+    },
     snippetTitle: {
+      flex: 1,
+      flexWrap: 'wrap',
+      textAlign: 'left',
       fontSize: 29,
       fontWeight: '600',
       marginTop: 4,
       marginHorizontal: 15,
+      width: "100%",
     },
     snippetDescription: {
       marginTop: 8,
       marginHorizontal: 15,
       fontSize: 15.5,
       fontWeight: '400',
+    },
+    AddressContainer: {
+      flex: 1,
+      alignItems: "center",
+      flexDirection: "row",
+    },
+    AddressButtonContainer: {
+      flexDirection: 'row',
+      width: "100%",
+      justifyContent: 'center',
+    },
+    AddressButton: {
+      paddingVertical: 5,
+      backgroundColor: "#00C2FF",
+      alignItems: "center",
+      borderRadius: 10,
+      width: 150,
+      height: 30,
+      position: "relative",
+    },
+    AddressText: {
+      color: "white",
+      fontSize: 16,
     },
   });

@@ -1,7 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { Image, StyleSheet, Text, View } from "react-native";
-import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity, Image, StyleSheet, Text, View } from "react-native";
 
 // Testing with Yelp API data
 export const testRestaurants = [
@@ -58,7 +56,7 @@ export const testRestaurants = [
 export default function ViewRestaurants({ navigation, ...props }) {
     return (
       <>
-        {props.restaurantData.map((restaurant, index) => (
+        {props.yelpData.map((restaurant, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={1} 
@@ -67,20 +65,13 @@ export default function ViewRestaurants({ navigation, ...props }) {
               name: restaurant.name,
               image: restaurant.image_url,
               price: restaurant.price,
-              reviews: restaurant.review_count,
-              distance: restaurant.distance,
               categories: restaurant.categories,
               address: restaurant.location.display_address,
           })}>
             <View style={styles.objectContainer}>
-              <RestaurantImage 
-                image={restaurant.image_url} 
-              />
-              <RestaurantInformation 
-                name={restaurant.name}
-                rating={restaurant.rating}
-                distance={restaurant.distance}
-              />
+              <YelpImage image={restaurant.image_url} />
+              <YelpInfo storeName={restaurant.name} storeRating={restaurant.rating} storeDistance={restaurant.distance}
+                        reviewCount={restaurant.review_count} price={restaurant.price} />
             </View>
           </TouchableOpacity>
         ))}
@@ -88,34 +79,28 @@ export default function ViewRestaurants({ navigation, ...props }) {
     );
 }
 
-const RestaurantImage = (props) => (
-    <>
-        <Image 
-            source={{uri: props.image}}
-            style={styles.imageContainer}
-        />
-        <TouchableOpacity style={{position: 'absolute', right: 20, top:15}}>
-            <MaterialCommunityIcons name='heart-outline' size={25} color='white'></MaterialCommunityIcons>
-        </TouchableOpacity>
-    </>
+const YelpImage = (props) => (
+  <Image source={{uri: props.image}} style={styles.imageContainer} />
 )
 
-const RestaurantInformation = (props) => (
+const YelpInfo = (props) => (
     <View style={styles.restaurantInfoContainer}>
         <View>
-            <Text style={styles.restaurantTitle}> {props.name} </Text>
-            <Text style={styles.restaurantDistance}>{(props.distance/1609).toFixed(2)} mi</Text>
+            <Text style={styles.restaurantTitle}> {props.storeName} </Text>
+            <Text style={styles.subText}> {(props.storeDistance/1609).toFixed(2)} mi</Text>
+            <Text style={styles.subText}> {props.price}</Text>
         </View>
         <View>
             <Text style={styles.restaurantRatingText}>Rating</Text>
-            <Text style={styles.restaurantRatingNumber}>{props.rating}</Text>
+            <Text style={styles.restaurantRatingNumber}>{props.storeRating}</Text>
+            <Text style={styles.subText}>{props.reviewCount} reviews</Text>
         </View>
     </View>
 )
 
 const styles = StyleSheet.create({
     container: {
-      marginBottom: 30,
+      marginBottom: 5,
     },
     objectContainer: {
       margin: 10,
@@ -135,10 +120,12 @@ const styles = StyleSheet.create({
       marginTop: 5,
     },
     restaurantTitle: {
+      flex: 1,
+      flexWrap: 'wrap',
       fontSize: 20,
       fontWeight: 'bold',
     },
-    restaurantDistance: {
+    subText: {
       fontSize: 16,
       color: 'gray',
     },
