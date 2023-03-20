@@ -7,10 +7,11 @@ import SearchBar from "../components/SearchBar";
 import ViewRestaurants, { testRestaurants, } from "../components/viewRestaurants";
 
 // YELP
-const YELP_API_KEY = "wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx";
+const YELP_API_KEY = "OZGT54NiVj5veY1qL5nqknbFR75DEnesxCcZlPpPud9y75h2V74PRqmT_3w0-IYrDVAOfWaaah946CeSgE_RTLMnjMaBxlVZKg1oDU4ILyqtUn3NdcyrqdIvkIcSZHYx";
 
 export default function HomeScreen({ navigation }) {
   const [restaurantData, getRestaurantResults] = useState(testRestaurants);
+  const [location, setLocation] = useState('Irvine');
   
   const getYelpRestaurants = () => {
     const options = {
@@ -21,7 +22,7 @@ export default function HomeScreen({ navigation }) {
       }
     };
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var testURL = 'https://api.yelp.com/v3/businesses/search?location=SanDiego&term=restaurants'
+    var testURL = 'https://api.yelp.com/v3/businesses/search?location=LosAngeles&term=restaurants'
 
     return fetch(proxyUrl + testURL, options)
       .then((response) => response.json())
@@ -30,13 +31,13 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     getYelpRestaurants();
-  }, []);
+  }, [location, restaurantData]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subView}>
         <Text style={styles.title}>ZotFoods</Text>
-        <SearchBar />
+        <SearchBar locationHandler={setLocation}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ViewRestaurants restaurantData={restaurantData} navigation={navigation} />
