@@ -1,6 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/native'; 
 
@@ -9,21 +8,21 @@ export default function NavBar() {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                <Icon icon='home' text="Home" />
+                <NavButton icon='home' text="Home" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <Icon icon='user' text="Profile" />
+                <NavButton icon='user' text="Profile" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Favorites')}>
-                <Icon icon='star' text="Favorites" />
+                <NavButton icon='star' text="Favorites" />
             </TouchableOpacity>
         </View>
     )
 }
 
-const Icon = (props) => (
+const NavButton = (props) => (
     <View>
-        <FontAwesome5 name={props.icon} size={25} style={styles.image} />
+        <FontAwesome5 name={props.icon} size={30} style={styles.image} />
         <Text>{props.text}</Text>
     </View>
 );
@@ -31,9 +30,10 @@ const Icon = (props) => (
 const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      margin: 10, 
-      marginHorizontal: 30,
       justifyContent: 'space-between',
+      marginHorizontal: 40,
+      marginBottom: 12,
+      marginTop: 12,
     },
     image: {
       marginBottom: 3,

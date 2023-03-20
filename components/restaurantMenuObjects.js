@@ -10,7 +10,7 @@ export default function RestaurantMenuObjects({food}) {
       {food.map((food,index) => (
         <View key={index}>
           <View style={styles.container}>
-              <FoodInformation food={food} />
+              <MenuItemData food={food} />
           </View>
           <Divider width={0.5} orientation="vertical" style={styles.divider} />
         </View>
@@ -19,7 +19,7 @@ export default function RestaurantMenuObjects({food}) {
     );
 }
 
-const FoodInformation = (props) => (
+const MenuItemData = (props) => (
   <View style={styles.namePriceWrapper}>
     <View style={styles.menuItemContainer}>
         <Text style={styles.foodName}>{props.food.title}</Text>

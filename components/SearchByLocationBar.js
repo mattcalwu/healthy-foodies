@@ -4,7 +4,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-export default function SearchBar() {
+export default function SearchByLocationBar() {
     return (
         <View style={styles.container}>
             <GooglePlacesAutocomplete 
