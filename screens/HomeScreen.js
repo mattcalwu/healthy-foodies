@@ -6,9 +6,10 @@ import NavBar from "../components/navBar";
 import SearchByLocationBar from "../components/SearchByLocationBar";
 import ViewRestaurants, { testRestaurants, } from "../components/viewRestaurants";
 
-
 export default function HomeScreen({ navigation }) {
-  const [restaurantResults, getRestaurantResults] = useState(testRestaurants);
+  const [restaurantData, getRestaurantResults] = useState(testRestaurants);
+  const [location, setLocation] = useState('Irvine');
+  
   const getYelpRestaurants = () => {
     const options = {
       method: 'GET',
@@ -18,7 +19,8 @@ export default function HomeScreen({ navigation }) {
       }
     };
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var targetURL = 'https://api.yelp.com/v3/businesses/search?location=LosAngeles&term=restaurants'
+    var targetURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`
+
     return fetch(proxyUrl + targetURL, options)
       .then((response) => response.json())
       .then((json) => getRestaurantResults(json.businesses));
@@ -26,13 +28,13 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     getYelpRestaurants();
-  }, []);
+  }, [location, restaurantData]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subView}>
         <Text style={styles.title}>ZotFoods</Text>
-        <SearchByLocationBar />
+        <SearchBar locationHandler={setLocation}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ViewRestaurants yelpData={restaurantResults} navigation={navigation} />
