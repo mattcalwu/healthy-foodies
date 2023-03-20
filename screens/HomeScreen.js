@@ -1,122 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, TextInput, ScrollView, StyleSheet, View } from "react-native";
-import { getAuth, signOut } from "firebase/auth";
-import { tempBusinesses, YelpItems } from "../components/YelpItems";
-import { businesses } from "../components/businesses";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { Divider } from "react-native-elements";
+import { ScrollView } from "react-native-web";
+import NavBar from "../components/navBar";
+import SearchBar from "../components/SearchBar";
+import ViewRestaurants, { testRestaurants, } from "../components/viewRestaurants";
 
+// YELP
+const YELP_API_KEY = "wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx";
 
-const HomeScreen = ({ navigation }) => {
-  const [searchValue, setSearchValue] = useState("");
-  const [statusLogin, setStatusLogin] = useState(false);
-  const [buttonLogin, setButtonLogin] = useState("Login");
-  const [yelpData, setYelpData ] = useState(tempBusinesses);
-  const [location, setLocation] = useState("Los Angeles");
-  const handleSearch = () => {
-    console.log(`Searching for ${searchValue}`);
-    setLocation(searchValue);
-    console.log(`Location value ${location}`);
-    // Add your search logic here
-  };
-
-  const getBusinessesFromYelp = () => {
-    const apiURI = `https://api.yelp.com/v3/businesses/search?location=belmont&term=Restaurant&categories=&sort_by=best_match&limit=5`
-    const api_key = "OZGT54NiVj5veY1qL5nqknbFR75DEnesxCcZlPpPud9y75h2V74PRqmT_3w0-IYrDVAOfWaaah946CeSgE_RTLMnjMaBxlVZKg1oDU4ILyqtUn3NdcyrqdIvkIcSZHYx"
-    const yelpUrl = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=Boston`;
-
-    const apiOptions = {
-        headers: {
-        Authorization: `Bearer ${api_key}`,
-        "Access-Control-Allow-Origin": "*",
-        },
+export default function HomeScreen({ navigation }) {
+  const [restaurantData, getRestaurantResults] = useState(testRestaurants);
+  
+  const getYelpRestaurants = () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${YELP_API_KEY}`
+      }
     };
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+    var testURL = 'https://api.yelp.com/v3/businesses/search?location=SanDiego&term=restaurants'
 
-    return fetch(yelpUrl, apiOptions)
-        .then((res) => res.json())
-        .then((json) =>
-        setYelpData(json.businesses)
-        );
+    return fetch(proxyUrl + testURL, options)
+      .then((response) => response.json())
+      .then((json) => getRestaurantResults(json.businesses));
   };
 
-  const buttonMode = () => {
-    setStatusLogin(!statusLogin);
-    if (statusLogin) {
-      console.log("log out mode");
-      const auth = getAuth();
-      signOut(auth)
-        .then(() => {
-          // Sign-out successful.
-        })
-        .catch((error) => {
-          // An error happened.
-        });
-        setButtonLogin("Login");
-    } else {
-      setButtonLogin("Logout");
-      console.log("log in mode");
-      navigation.navigate("Login");
-    }
-  };
+  useEffect(() => {
+    getYelpRestaurants();
+  }, []);
 
-  useEffect(()=>{
-    getBusinessesFromYelp()
-  },[location])
   return (
-    <ScrollView>
-        <View style={styles.container}>
-            <Button title={buttonLogin} onPress={buttonMode} />
-            <Text style={styles.title}>Welcome to ZotFoods</Text>
-            <Text style={styles.subtitle}>
-                Get personalized food recommendations based on your preferences.
-            </Text>
-            <TextInput
-                style={styles.searchBar}
-                placeholder="Search for cuisine"
-                onChangeText={setSearchValue}
-                onSubmitEditing={handleSearch}
-                value={searchValue}
-            />
-      
-            <YelpItems yelpData={yelpData}/>
-        </View>
-    </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subView}>
+        <Text style={styles.title}>ZotFoods</Text>
+        <SearchBar />
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ViewRestaurants restaurantData={restaurantData} />
+      </ScrollView>
+      <Divider width={1}>
+        <NavBar />
+      </Divider>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  subtitle: {
-    fontSize: 16,
+    fontWeight: "400",
+    fontSize: "40px",
     textAlign: "center",
-    marginHorizontal: 32,
   },
-  searchBar: {
-    height: 40,
-    width: "80%",
-    borderColor: "gray",
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginTop: 20,
+  container: {
+    backgroundColor: "#eee", 
+    flex: 1
   },
+  subView: {
+    backgroundColor: "white", 
+    padding: 15
+  },
+  scrollOptions: {
 
-  image: {
-    width: "100%",
-    height: "30%",
-    marginTop: 20,
-  },
-  map: {
-    width: '50%',
-    height: '50%',
   },
 });
-
-export default HomeScreen;
