@@ -4,7 +4,7 @@ import { Divider, Rating } from "react-native-elements";
 import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native'; 
-
+import GetAddress from "./GetAddress";
 
 const yelpRestaurantInfo = {
     name: "Amon Gus's German Weinerschnitzels",
@@ -24,22 +24,29 @@ const yelpRestaurantInfo = {
 };
 
 export default function RestaurantSnippet(props) {
-    const {name, image, price, reviews, distance, categories} = props.route.params;
+    const {name, image, price, reviews, distance, address, categories} = props.route.params;
     const formattedCategories = categories.map((cat) => cat.title).join(' * ');
     const description = `${formattedCategories} * ${(distance/1609).toFixed(2)} mi ${price ? ' * ' + price : ""} * ${reviews} reviews`;
 
     const navigation = useNavigation();
     return (
         <View>
-            <SnippetImage image={image} />
-            <TouchableOpacity 
-                style={{position: 'absolute', right: 25, top:15}}
-                onPress={() => navigation.navigate('Home')}
-            >
-                <MaterialIcons name="cancel" size={32} color="red" style={styles.cancelButton} />
-            </TouchableOpacity>
-            <SnippetTitle title={name} />
-            <SnippetDescription description={description} />
+            <View>
+                <SnippetImage image={image} />
+                <TouchableOpacity 
+                    style={{position: 'absolute', right: 25, top:15}}
+                    onPress={() => navigation.navigate('Home')}
+                >
+                    <MaterialIcons name="cancel" size={32} color="red" style={styles.cancelButton} />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.headerContainer}>
+                <SnippetTitle title={name} />
+                <GetAddress style={styles.AddressButton} address={address} />
+            </View>
+            <View>
+                <SnippetDescription description={description} />
+            </View>
         </View>
     )
 }
@@ -68,11 +75,26 @@ const styles = StyleSheet.create({
       width: '100%',
       height: 180,
     },
+    headerContainer: {
+      width: "90%",
+      marginHorizontal: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: 5,
+    },
+    AddressButton: {
+      textAlign: 'right',
+    },
     snippetTitle: {
+      flex: 1,
+      flexWrap: 'wrap',
+      textAlign: 'left',
       fontSize: 29,
       fontWeight: '600',
       marginTop: 4,
       marginHorizontal: 15,
+      width: "100%",
     },
     snippetDescription: {
       marginTop: 8,

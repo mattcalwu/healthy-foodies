@@ -4,11 +4,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 
 export default function GetAddress(props) {
-    const {address} = props.route.params;
     return (
         <View style={styles.container}>
-            <View style={styles.unknown1}>
-                <TouchableOpacity style={styles.button} onPress={() => {Clipboard.setString(address), alert("Clipped!")}}>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={() => {Clipboard.setString(props.address), alert("Clipped!")}}>
                     <Text style={styles.text}>Get Address</Text>
                 </TouchableOpacity>
             </View>
@@ -21,23 +20,19 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: "center",
       flexDirection: "row",
-      position: "absolute",
-      bottom: 130,
-      zIndex: 999,
     },
-    unknown1: {
+    buttonContainer: {
       flexDirection: 'row',
       width: "100%",
       justifyContent: 'center',
     },
     button: {
-      marginTop: 200,
-      paddingTop: 10,
+      paddingTop: 5,
       backgroundColor: "#00C2FF",
       alignItems: "center",
       borderRadius: 10,
-      width: 200,
-      height: 50,
+      width: 180,
+      height: 40,
       position: "relative",
     },
     text: {

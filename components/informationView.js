@@ -35,7 +35,6 @@ export default function InformationView({ route }) {
             <RestaurantSnippet route={route} />
             <Divider width={1.8} style={styles.gap} />
             <RestaurantMenuObjects food={testFoods}/>
-            <GetAddress route={route} />
         </View>
     );
 }
