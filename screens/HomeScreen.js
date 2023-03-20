@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
       }
     };
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var testURL = 'https://api.yelp.com/v3/businesses/search?location=SanDiego&term=restaurants&categories='
+    var testURL = 'https://api.yelp.com/v3/businesses/search?location=SanDiego&term=restaurants'
 
     return fetch(proxyUrl + testURL, options)
       .then((response) => response.json())
