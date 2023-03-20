@@ -55,22 +55,37 @@ export const testRestaurants = [
     },
 ];
 
-export default function ViewRestaurants(props) {
+export default function ViewRestaurants({ navigation, ...props }) {
     return (
-        <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {props.restaurantData.map((restaurant, index) => (
-                <View key={index} style={styles.objectContainer}>
-                    <RestaurantImage 
-                        image={restaurant.image_url} 
-                    />
-                    <RestaurantInformation 
-                        name={restaurant.name}
-                        rating={restaurant.rating}
-                    />
-                </View>
-            ))}
-        </TouchableOpacity>
-    )
+      <>
+        {props.restaurantData.map((restaurant, index) => (
+          <TouchableOpacity
+            key={index}
+            activeOpacity={1} 
+            style={styles.container} 
+            onPress={() => navigation.navigate("InformationView", {
+              name: restaurant.name,
+              image: restaurant.image_url,
+              price: restaurant.price,
+              reviews: restaurant.review_count,
+              distance: restaurant.distance,
+              categories: restaurant.categories,
+              address: restaurant.location.display_address,
+          })}>
+            <View style={styles.objectContainer}>
+              <RestaurantImage 
+                image={restaurant.image_url} 
+              />
+              <RestaurantInformation 
+                name={restaurant.name}
+                rating={restaurant.rating}
+                distance={restaurant.distance}
+              />
+            </View>
+          </TouchableOpacity>
+        ))}
+      </>
+    );
 }
 
 const RestaurantImage = (props) => (
@@ -89,7 +104,7 @@ const RestaurantInformation = (props) => (
     <View style={styles.restaurantInfoContainer}>
         <View>
             <Text style={styles.restaurantTitle}> {props.name} </Text>
-            <Text style={styles.restaurantDistance}>3.5 mi</Text>
+            <Text style={styles.restaurantDistance}>{(props.distance/1609).toFixed(2)} mi</Text>
         </View>
         <View>
             <Text style={styles.restaurantRatingText}>Rating</Text>
