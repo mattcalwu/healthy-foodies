@@ -14,7 +14,7 @@ export const RegistrationScreen = ({navigation}) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login to your Account with Google</Text>
+      <Text style={styles.title}>Sign in to your Account with Google</Text>
       <Button title={"Sign In With Google"} onPress={() => {
         googleLogin()
       }} />

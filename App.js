@@ -1,17 +1,22 @@
 import * as React from 'react';
-import HomeScreen from './screens/Homescreen';
+import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
+import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View, Button } from 'react-native';
-
-const Stack = createNativeStackNavigator();
+import NavBar from './components/navBar';
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
+  const screenOptions = {
+    headerShown: false,
+  };
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="Registration" component={RegistrationScreen}/>
@@ -19,12 +24,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
