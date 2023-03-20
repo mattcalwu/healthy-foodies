@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 export default function SearchBar() {
     return (
         <View style={styles.container}>
@@ -16,7 +17,7 @@ export default function SearchBar() {
                 )}
             />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({

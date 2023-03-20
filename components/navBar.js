@@ -23,7 +23,7 @@ export default function NavBar() {
 
 const Icon = (props) => (
     <View>
-        <FontAwesome5 name={props.icon} size={25} style={styles.unknown1} />
+        <FontAwesome5 name={props.icon} size={25} style={styles.image} />
         <Text>{props.text}</Text>
     </View>
 );
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 30,
       justifyContent: 'space-between',
     },
-    unknown1: {
+    image: {
       marginBottom: 3,
       alignSelf: 'center',
     },

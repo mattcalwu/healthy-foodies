@@ -39,7 +39,7 @@ export default function HomeScreen({ navigation }) {
         <SearchBar />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ViewRestaurants restaurantData={restaurantData} />
+        <ViewRestaurants restaurantData={restaurantData} navigation={navigation} />
       </ScrollView>
       <Divider width={1}>
         <NavBar />
