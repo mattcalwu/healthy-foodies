@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { firebaseAuth, provider } from "../environment/config";
 import { signInWithPopup } from "firebase/auth";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
 
 export const RegistrationScreen = ({ navigation }) => {
   function readData() {
@@ -17,18 +17,19 @@ export const RegistrationScreen = ({ navigation }) => {
   }
   function writeUserData(userId, name, email) {
     const db = getDatabase();
-    const tasksRef = ref(db, "Users/");
+    const tasksRef = ref(db, "Users/"+userId);
     // var playersRef = firebase.database().ref("Users/");
-    set(tasksRef, {
-      UserName: name,
-      UserEmail: email,
-    });
+    set(tasksRef, 
+      {
+        UserName: name,
+        UserEmail: email,
+      });
     console.log("Sent");
   }
   function googleLogin() {
-    console.log("about to read")
-    readData()
-    console.log("read it")
+    console.log("about to read");
+    readData();
+    console.log("read it");
     signInWithPopup(firebaseAuth, provider)
       .then((data) => {
         const userData = data.user;
@@ -38,7 +39,6 @@ export const RegistrationScreen = ({ navigation }) => {
         writeUserData(userData.uid, userData.displayName, userData.email);
       })
       .then(() => navigation.navigate("Home"));
-    
   }
 
   return (

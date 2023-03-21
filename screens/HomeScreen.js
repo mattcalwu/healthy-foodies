@@ -1,15 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Button } from "react-native";
 import { Divider } from "react-native-elements";
 import { ScrollView } from "react-native-web";
 import NavBar from "../components/NavBar";
+import { getAuth, signOut } from "firebase/auth";
 import SearchByLocationBar from "../components/SearchByLocationBar";
 import ViewRestaurants, { testRestaurants, } from "../components/ViewRestaurants";
 
 export default function HomeScreen({ navigation }) {
   const [restaurantResults, getRestaurantResults] = useState(testRestaurants);
   const [location, setLocation] = useState('Irvine');
-  
+  const [statusLogin, setStatusLogin] = useState(false);
+  const [buttonLogin, setButtonLogin] = useState("Login");
+  const buttonMode = () => {
+    setStatusLogin(!statusLogin);
+    if (statusLogin) {
+      console.log("log out mode");
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+        })
+        .catch((error) => {
+          // An error happened.
+        });
+        setButtonLogin("Login");
+    } else {
+      setButtonLogin("Logout");
+      console.log("log in mode");
+      navigation.navigate("Login");
+    }
+  };
   const getYelpRestaurants = () => {
     const options = {
       method: 'GET',
@@ -33,6 +54,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subView}>
+      <Button title={buttonLogin} onPress={buttonMode} />
         <Text style={styles.title}>ZotFoods</Text>
         <SearchByLocationBar locationHandler={setLocation}/>
       </View>
