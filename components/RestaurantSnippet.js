@@ -80,7 +80,7 @@ export default function RestaurantSnippet(props) {
         <TouchableOpacity
           style={styles.AddressButton}
           onPress={() => {
-            
+            console.log(address)
             console.log("CATEGORY OF PLACE FUCKER:", userIDNum)
             writeUserData(userIDNum, categories)
             Clipboard.setString(address);

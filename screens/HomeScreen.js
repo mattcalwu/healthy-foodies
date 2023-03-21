@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import { getAuth, signOut } from "firebase/auth";
 import SearchByLocationBar from "../components/SearchByLocationBar";
 import ViewRestaurants, { testRestaurants, } from "../components/ViewRestaurants";
+import { throttle } from "lodash";
 
 export default function HomeScreen({ route, navigation }) {
   const [restaurantResults, getRestaurantResults] = useState(testRestaurants);
@@ -31,24 +32,29 @@ export default function HomeScreen({ route, navigation }) {
       navigation.navigate("Login");
     }
   };
-  const getYelpRestaurants = () => {
+
+  const throttledYelpRestaurantSearch = throttle(() => {
     const options = {
       method: 'GET',
       headers: {
+        'Origin': 'http://localhost:19006/',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Origin': 'http://localhost:19006/',
         accept: 'application/json',
         Authorization: 'Bearer wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx'
       }
     };
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-    var targetURL = `https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`
 
-    return fetch(proxyUrl + targetURL, options)
+    return fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`, options)
       .then((response) => response.json())
-      .then((json) => getRestaurantResults(json.businesses));
-  };
+      .then((json) => getRestaurantResults(json.businesses))
+      .catch(error => {
+        console.log("Error:", error);
+      });
+  }, 5000);
 
   useEffect(() => {
-    getYelpRestaurants();
+    throttledYelpRestaurantSearch();
   }, [location, restaurantResults]);
 
   return (
