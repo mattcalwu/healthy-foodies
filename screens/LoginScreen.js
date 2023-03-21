@@ -27,6 +27,7 @@ export const RegistrationScreen = ({ navigation }) => {
     console.log("Sent");
   }
   function googleLogin() {
+    var userDataID = null;
     console.log("about to read");
     readData();
     console.log("read it");
@@ -34,11 +35,14 @@ export const RegistrationScreen = ({ navigation }) => {
       .then((data) => {
         const userData = data.user;
         console.log(userData.uid);
+        userDataID = userData.uid;
         console.log(userData.displayName);
         console.log(userData.email);
         writeUserData(userData.uid, userData.displayName, userData.email);
       })
-      .then(() => navigation.navigate("Home"));
+      .then(() => navigation.navigate("Home", {
+        userID: userDataID,
+      }));
   }
 
   return (

@@ -7,7 +7,7 @@ import { getAuth, signOut } from "firebase/auth";
 import SearchByLocationBar from "../components/SearchByLocationBar";
 import ViewRestaurants, { testRestaurants, } from "../components/ViewRestaurants";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ route, navigation }) {
   const [restaurantResults, getRestaurantResults] = useState(testRestaurants);
   const [location, setLocation] = useState('Irvine');
   const [statusLogin, setStatusLogin] = useState(false);
@@ -59,7 +59,8 @@ export default function HomeScreen({ navigation }) {
         <SearchByLocationBar locationHandler={setLocation}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ViewRestaurants yelpData={restaurantResults} navigation={navigation} />
+        
+        <ViewRestaurants yelpData={restaurantResults} navigation={navigation} userID={route.params} />
       </ScrollView>
       <NavBar />
     </SafeAreaView>
