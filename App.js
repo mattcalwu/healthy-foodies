@@ -5,7 +5,7 @@ import RegistrationScreen from './screens/RegistrationScreen';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import InformationView from './components/informationView';
+import InformationView from './components/InformationView';
 
 
 export default function App() {

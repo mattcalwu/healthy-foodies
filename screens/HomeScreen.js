@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Divider } from "react-native-elements";
 import { ScrollView } from "react-native-web";
-import NavBar from "../components/navBar";
+import NavBar from "../components/NavBar";
 import SearchByLocationBar from "../components/SearchByLocationBar";
-import ViewRestaurants, { testRestaurants, } from "../components/viewRestaurants";
+import ViewRestaurants, { testRestaurants, } from "../components/ViewRestaurants";
 
 export default function HomeScreen({ navigation }) {
-  const [restaurantData, getRestaurantResults] = useState(testRestaurants);
+  const [restaurantResults, getRestaurantResults] = useState(testRestaurants);
   const [location, setLocation] = useState('Irvine');
   
   const getYelpRestaurants = () => {
@@ -28,13 +28,13 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     getYelpRestaurants();
-  }, [location, restaurantData]);
+  }, [location, restaurantResults]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subView}>
         <Text style={styles.title}>ZotFoods</Text>
-        <SearchBar locationHandler={setLocation}/>
+        <SearchByLocationBar locationHandler={setLocation}/>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ViewRestaurants yelpData={restaurantResults} navigation={navigation} />
