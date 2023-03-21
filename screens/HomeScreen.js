@@ -36,7 +36,7 @@ export default function HomeScreen({ route, navigation }) {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx'
+        Authorization: 'Bearer 5KT6juxUh1qK9oDiKlIYnJJSFiOmQSblEexVwx7ia9lSv1kS2JIvl2Dg8ItNXCZRu5URhdIp5Rf7jq0NA72xZ2oNZxBwOb9XXyK3S4jilnaG7TJf_-CbV-OLsBYaZHYx'
       }
     };
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
