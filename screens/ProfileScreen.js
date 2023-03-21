@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity,SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity,SafeAreaView, FlatList } from 'react-native';
 import NavBar from "../components/NavBar";
+import { Divider } from 'react-native-elements';
 const cuisines = [
   { id: 1, name: 'Italian' },
   { id: 2, name: 'Chinese' },
@@ -11,7 +12,7 @@ const cuisines = [
 
 export const ProfileScreen = ({ navigation }) => {
 
-    const [restaurantsExplored, setRestaurantsExplored] = useState(0);
+    const [restaurantsExplored, setRestaurantsExplored] = useState(5);
 
     const renderCuisine = ({ item }) => (
         <View style={styles.cuisineContainer}>
@@ -29,80 +30,49 @@ export const ProfileScreen = ({ navigation }) => {
       
 
   return (
-    <SafeAreaView style ={styles.container}>
-    <ScrollView>
-      {/* <View style={styles.headerContainer}>
-        <Image
-          style={styles.coverPhoto}
-          source={{uri: 'https://www.bootdey.com/image/280x280/1E90FF/1E90FF'}}
-        />
-        <View style={styles.profileContainer}>
-          <Image
-            style={styles.profilePhoto}
-            source={{uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png'}}
-          />
-          <Text style={styles.nameText}>Welcome, </Text>
-        </View>
-      </View> */}
-    <Text style={styles.nameText}>Welcome, Bob</Text>
-
-      {/* <View style={styles.bioContainer}>
-      </View> */}
-      <View style={styles.statsContainer}>
-
-        <View style={styles.statContainer}>
-          <Text style={styles.statCount}>Restaurants explored: {restaurantsExplored} </Text>
-          {/* <Text style={styles.statLabel}>Restuarants Explored</Text> */}
-        </View>
-
-      </View>
-      <View style={styles.preferencesContainer}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
+        <Text style={styles.nameText}>Welcome, Bob</Text>
+        <Divider width={1.9} color={"#C9C9C9"} />
+          <View style={styles.statsContainer}>
+            <View style={styles.statContainer}>
+              <Text style={styles.statCount}>Restaurants explored: {<Text style={styles.statsWrapper}>{restaurantsExplored}</Text>} </Text>
+            </View>
+          </View>
+          <Divider width={1.9} color={"#C9C9C9"} />
+          <View style={styles.preferencesContainer}>
             <Text style={styles.preferencesText}>Preferences:</Text>
-    </View>
-      <FlatList
-        data={cuisines}
-        renderItem={renderCuisine}
-        keyExtractor={item => item.id.toString()}
-        style={styles.cuisineList}
-      />
-   
-    </ScrollView>
-    <NavBar />
+          </View>
+          <FlatList
+            data={cuisines}
+            renderItem={renderCuisine}
+            keyExtractor={item => item.id.toString()}
+            style={styles.cuisineList}
+          />
+      </View>
+      <View style={styles.navBarContainer}>
+        <NavBar homeColor="grey" profileColor="black" favoriteColor="grey" />
+      </View>
     </SafeAreaView>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#eee',
+  },
+  subContainer: {
+    paddingHorizontal: 15,
   },
   headerContainer: {
     alignItems: 'center',
   },
-  coverPhoto: {
-    width: '100%',
-    height: 200,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    marginTop: -50,
-  },
-  profilePhoto: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
   nameText: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     marginTop: 10,
-  },
-  bioContainer: {
-    padding: 15,
-  },
-  bioText: {
-    fontSize: 16,
+    marginBottom: 15,
   },
   statsContainer: {
     flexDirection: 'row',
@@ -116,6 +86,11 @@ const styles = {
   statCount: {
     fontSize: 20,
     fontWeight: 'light',
+  },
+  statsWrapper: {
+    backgroundColor: "#D9D9D9",
+    borderRadius: 8,
+    padding: 5,
   },
   statLabel: {
     fontSize: 16,
@@ -140,11 +115,12 @@ const styles = {
     fontWeight: 'light',
   },
   cuisineContainer: {
-    alignItems: 'left',
+    alignItems: 'center',
     marginVertical: 5,
   },
   cuisineBackground: {
-    backgroundColor: '#e5e5e5',
+    backgroundColor: '#D9D9D9',
+    width: "90%",
     borderRadius: 8,
     padding: 10,
     flexDirection: 'row',
@@ -160,6 +136,9 @@ const styles = {
     resizeMode: 'contain',
     marginLeft: 'auto'
   },
-};
+  navBarContainer: {
+    marginTop: 295,
+  }
+});
 
 export default ProfileScreen;

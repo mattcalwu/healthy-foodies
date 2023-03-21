@@ -4,7 +4,7 @@ import { TouchableOpacity, Image, StyleSheet, Text, View } from "react-native";
 // Testing with Yelp API data
 export const testRestaurants = [
   {
-    name: "Your Momma's Cafe",
+    name: "Young Tyke's Cafe",
     image_url:
       "https://media.discordapp.net/attachments/400503489546944512/1086513435602333716/IMG_20230317_193932078.jpg?width=893&height=670",
     categories: [
@@ -19,6 +19,21 @@ export const testRestaurants = [
     ],
     price: "$$",
     rating: 4.5,
+    review_count: 2036,
+    distance: 600,
+    "location": {
+      "address1": "4852 S Pulaski Rd",
+      "address2": "",
+      "address3": "",
+      "city": "Chicago",
+      "zip_code": "60632",
+      "country": "US",
+      "state": "IL",
+      "display_address": [
+        "4852 S Pulaski Rd",
+        "Chicago, IL 60632"
+      ]
+    },
   },
   {
     name: "Kura Revolving Sushi Bar",
@@ -36,6 +51,22 @@ export const testRestaurants = [
     ],
     price: "$$$",
     rating: 3.5,
+    review_count: 8015,
+    distance: 3500,
+    "location": {
+      "address1": "2002 S Wentworth Ave",
+      "address2": "Ste 103",
+      "address3": "",
+      "city": "Chicago",
+      "zip_code": "60616",
+      "country": "US",
+      "state": "IL",
+      "display_address": [
+        "2002 S Wentworth Ave",
+        "Ste 103",
+        "Chicago, IL 60616"
+      ]
+    },
   },
   {
     name: "Los Pollos Hermanos",
@@ -53,6 +84,21 @@ export const testRestaurants = [
     ],
     price: "$",
     rating: 5.0,
+    review_count: 62,
+    distance: 1000,
+    "location": {
+      "address1": "2131 S Archer Ave",
+      "address2": "",
+      "address3": null,
+      "city": "Chicago",
+      "zip_code": "60616",
+      "country": "US",
+      "state": "IL",
+      "display_address": [
+        "2131 S Archer Ave",
+        "Chicago, IL 60616"
+      ]
+    },
   },
 ];
 

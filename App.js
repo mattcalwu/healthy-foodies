@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InformationView from './components/InformationView';
 import { ProfileScreen } from './screens/ProfileScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Screen name="Registration" component={RegistrationScreen}/>
         <Stack.Screen name="InformationView" component={InformationView}/>
         <Stack.Screen name="Profile" component={ProfileScreen}/>
+        <Stack.Screen name="Favorites" component={FavoritesScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

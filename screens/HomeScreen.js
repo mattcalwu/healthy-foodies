@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Button } from "react-native";
-import { Divider } from "react-native-elements";
 import { ScrollView } from "react-native-web";
 import NavBar from "../components/NavBar";
 import { getAuth, signOut } from "firebase/auth";
@@ -33,29 +32,29 @@ export default function HomeScreen({ route, navigation }) {
     }
   };
 
-  const throttledYelpRestaurantSearch = throttle(() => {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Origin': 'http://localhost:19006/',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Origin': 'http://localhost:19006/',
-        accept: 'application/json',
-        Authorization: 'Bearer wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx'
-      }
-    };
+  // const throttledYelpRestaurantSearch = throttle(() => {
+  //   const options = {
+  //     method: 'GET',
+  //     headers: {
+  //       'Origin': 'http://localhost:19006/',
+  //       'Access-Control-Allow-Headers': '*',
+  //       'Access-Control-Allow-Origin': 'http://localhost:19006/',
+  //       accept: 'application/json',
+  //       Authorization: 'Bearer wZCH7TWc34mJfGGd8iA6nWXkFLwygn4_7MpPuVTSzMtvqPki5OGoQnjz4BjlhDmanub8LXN9EebsWOkhzgG1F6xeLYZlbEJf2dW5u6_FTGX0M0H9jzXsWeWMh30XZHYx'
+  //     }
+  //   };
 
-    return fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`, options)
-      .then((response) => response.json())
-      .then((json) => getRestaurantResults(json.businesses))
-      .catch(error => {
-        console.log("Error:", error);
-      });
-  }, 5000);
+  //   return fetch(`https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${location}&term=restaurants`, options)
+  //     .then((response) => response.json())
+  //     .then((json) => getRestaurantResults(json.businesses))
+  //     .catch(error => {
+  //       console.log("Error:", error);
+  //     });
+  // }, 5000);
 
-  useEffect(() => {
-    throttledYelpRestaurantSearch();
-  }, [location, restaurantResults]);
+  // useEffect(() => {
+  //   throttledYelpRestaurantSearch();
+  // }, [location, restaurantResults]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,9 +65,9 @@ export default function HomeScreen({ route, navigation }) {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         
-        <ViewRestaurants yelpData={restaurantResults} navigation={navigation} userID={route.params} />
+        {/* <ViewRestaurants yelpData={restaurantResults} navigation={navigation} userID={route.params} /> */}
       </ScrollView>
-      <NavBar />
+      <NavBar homeColor="black" profileColor="grey" favoriteColor="grey" />
     </SafeAreaView>
   );
 };
