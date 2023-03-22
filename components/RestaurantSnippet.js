@@ -11,7 +11,7 @@ import { Divider, Rating } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { getDatabase, ref, set, onValue, push, child } from "firebase/database";
+import { getDatabase, ref, set, onValue, push, child, Database } from "firebase/database";
 
 
 const yelpRestaurantInfo = {
@@ -38,23 +38,49 @@ export default function RestaurantSnippet(props) {
     <Text style={styles.categoriesWrapper}>{cat.title}</Text>
   ));
 
-  function readData() {
+  function readData(userID, currPath) {
     const db = getDatabase();
-    const tasksRef = ref(db, "Users/"+userId.userID);
+    const tasksRef = ref(db, "Users/"+userID + currPath);
+    var dataBoom;
     onValue(tasksRef, (snapshot) => {
       const data = snapshot.val();
-      console.log("data", data);
+      console.log(data == null);
+      if(data == null){
+        
+        dataBoom = {};
+      }
+      else{
+        dataBoom = data;
+      }
       // updateStarCount(postElement, data);
     });
-    // return 0;
+    return dataBoom;
   }
   function writeUserData(userId, stuff) {
-    console.log(stuff)
+    console.log("read from curr user tags")
+    var curr_dicto_mode = readData(userId.userID, '/tagsAlias')
+    console.log("wat the fck is curr dicko",curr_dicto_mode)
+    var cat_dict = {}
+
+    for (let k in stuff) {
+      // console.log(stuff[k].alias)
+      if (stuff[k].alias in curr_dicto_mode){
+        //exists just add 1
+        console.log(curr_dicto_mode[stuff[k].alias])
+        curr_dicto_mode[stuff[k].alias] += 1
+      }
+      else{
+        // doesnt exist make it 1
+        curr_dicto_mode[stuff[k].alias] = 1
+      }
+      cat_dict[stuff[k].alias] = 1
+    }
+    console.log(cat_dict)
     const db = getDatabase();
-    const tasksRef = ref(db, "Users/"+userId.userID);
+    const tasksRef = ref(db, "Users/"+userId.userID+'/tagsAlias');
     // var playersRef = firebase.database().ref("Users/");
-    push(tasksRef, 
-      stuff);
+    set(tasksRef, 
+      curr_dicto_mode);
     console.log("Sent");
   }
 
