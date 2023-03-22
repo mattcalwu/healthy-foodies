@@ -110,7 +110,7 @@ export default function HomeScreen({ route, navigation }) {
           userID={global.currUserID}
         />
       </ScrollView>
-      <NavBar />
+      <NavBar homeColor="black" profileColor="grey" favoriteColor="grey" />
     </SafeAreaView>
   );
 }

@@ -1,20 +1,20 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { FontAwesome } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native'; 
 
-export default function NavBar() {
+export default function NavBar(props) {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                <NavButton icon='home' text="Home" />
+                <NavButton name='home' text="Home" color={props.homeColor} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                <NavButton icon='user' text="Profile" />
+                <NavButton name='user' text="Profile" color={props.profileColor} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Favorites')}>
-                <NavButton icon='star' text="Favorites" />
+                <NavButton name='star' text="Favorites" color={props.favoriteColor} />
             </TouchableOpacity>
         </View>
     )
@@ -22,7 +22,7 @@ export default function NavBar() {
 
 const NavButton = (props) => (
     <View>
-        <FontAwesome5 name={props.icon} size={30} style={styles.image} />
+        <FontAwesome name={props.name} size={30} color={props.color} style={styles.image} />
         <Text>{props.text}</Text>
     </View>
 );
